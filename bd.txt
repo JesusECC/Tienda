@@ -1,0 +1,142 @@
+CREATE database SOLISmarket;
+
+CREATE TABLE UBIGEO(
+  Idubigeo INT NOT NULL,
+  Departamento VARCHAR(50) NULL,
+  Provincia VARCHAR(50) NULL,
+  Distrito VARCHAR(50) NULL,
+  PRIMARY KEY (Idubigeo)
+  );
+-- -----------------------------------------------------
+-- Table `mydb`.`CLIENTE`
+-- -----------------------------------------------------
+CREATE TABLE CLIENTE (
+  Idcliente INT NOT NULL,
+  DNI INT NULL,
+  Nombre VARCHAR(50) NULL,
+  RazonSocial VARCHAR(50) NULL,
+  Direccion VARCHAR(100) NULL,
+  Telefono VARCHAR(50) NULL,
+  Correro VARCHAR(50) NULL,
+  UBIGEO_Idubigeo INT NOT NULL,
+  PRIMARY KEY (Idcliente),
+  CONSTRAINT FK_CLIENTE_UBIGEO FOREIGN KEY (UBIGEO_Idubigeo)
+  REFERENCES UBIGEO (Idubigeo)
+  )
+
+-- -----------------------------------------------------
+-- Table `mydb`.`CARGO`
+-- -----------------------------------------------------
+  CREATE TABLE CARGO (
+  Idcargo INT NOT NULL,
+  Descripcion VARCHAR(45) NULL,
+  stado VARCHAR(45) NULL,
+  PRIMARY KEY (Idcargo)
+  )
+
+-- -----------------------------------------------------
+-- Table `mydb`.`USUSARIO`
+-- -----------------------------------------------------
+CREATE TABLE USUSARIO (
+  Idususario INT NOT NULL,
+  Usuario VARCHAR(50) NULL,
+  Clave VARCHAR(15) NULL,
+  Stado VARCHAR(45) NULL,
+  CARGO_Idcargo INT NOT NULL,
+  PRIMARY KEY (Idususario),
+  CONSTRAINT FK_fk_USUSARIO_CARGO FOREIGN KEY (CARGO_Idcargo)
+  REFERENCES UBIGEO (Idubigeo)
+)
+
+-- -----------------------------------------------------
+-- Table `mydb`.`VENTA`
+-- -----------------------------------------------------
+CREATE TABLE VENTA(
+  Idventa INT NOT NULL,
+  Tipodocumento VARCHAR(45) NULL,
+  Tipoentrega VARCHAR(45) NULL,
+  TipoPago FLOAT NULL,
+  SudTotal FLOAT  NULL,
+  Descuento FLOAT NULL,
+  IGV FLOAT NULL,
+  Total FLOAT NULL,
+  Fecha DATE NULL,
+  Estado VARCHAR (45) NULL,
+  CLIENTE_Idcliente INT NOT NULL,
+  USUSARIO_Idususario INT NOT NULL,
+  PRIMARY KEY (Idventa),
+  CONSTRAINT FK_fk_VENTA_CLIENTE FOREIGN KEY (CLIENTE_Idcliente)
+  REFERENCES CLIENTE (Idcliente)
+)
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`CATEGORIA`
+-- -----------------------------------------------------
+CREATE TABLE CATEGORIA (
+  Idcategoria INT NOT NULL,
+  Descripcion VARCHAR(45) NULL,
+  PRIMARY KEY (Idcategoria))
+
+-- -----------------------------------------------------
+-- Table `mydb`.`PRODUCTO`
+-- -----------------------------------------------------
+CREATE TABLE PRODUCTO (
+  Idproducto INT NOT NULL,
+  Nombreproducto VARCHAR(45) NULL,
+  Imagen VARCHAR(45) NULL,
+  Stock INT NULL,
+  Precio VARCHAR(45) NULL,
+  Stado INT NULL,
+  CATEGORIA_Idcategoria INT NOT NULL,
+  PRIMARY KEY (Idproducto),
+  CONSTRAINT fk_PRODUCTO_CATEGORIA
+    FOREIGN KEY (CATEGORIA_Idcategoria)
+    REFERENCES CATEGORIA (Idcategoria)
+)
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`OFERTA`
+-- -----------------------------------------------------
+CREATE TABLE OFERTA (
+  IdOferta INT NOT NULL,
+  Nombreoferta VARCHAR(45) NULL,
+  FechaInicio DATE NULL,
+  FechaFinal DATE NULL,
+  Stado VARCHAR(45) NULL,
+  PRODUCTO_Idproducto INT NOT NULL,
+  PRIMARY KEY (IdOferta),
+  CONSTRAINT fk_PROMOCION_PRODUCTO1
+  FOREIGN KEY (PRODUCTO_Idproducto)
+  REFERENCES PRODUCTO (Idproducto)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION)
+
+CREATE TABLE DETALLEVENTA (
+  Cantidad INT NULL,
+  Total DECIMAL(6,2) NULL,
+  PRODUCTO_Idproducto INT NOT NULL,
+  VENTA_Idventa INT NOT NULL,
+  Iddetalleventa INT NULL,
+  CONSTRAINT fk_DETALLEVENTA_PRODUCTO
+  FOREIGN KEY (PRODUCTO_Idproducto)
+  REFERENCES PRODUCTO (Idproducto)
+  
+
+)
+
+
+  SELECT * FROM CATEGORIA
+  
+ INSERT INTO CATEGORIA VALUES (1, 'LACTEOS');
+ INSERT into CATEGORIA values (2,'ABARROTES');
+ INSERT INTO CATEGORIA VALUES (3, 'LIMPIEZAPERZONAL');
+ INSERT INTO CATEGORIA VALUES (4, 'ENBUTIDOS');
+ INSERT INTO CATEGORIA VALUES (5, 'SNACKS');
+ INSERT INTO CATEGORIA VALUES (6, 'LICORES');
+ INSERT INTO CATEGORIA VALUES (7, 'PANES');
+ INSERT INTO CATEGORIA VALUES (8, 'FRUTAS');
+ INSERT INTO CATEGORIA VALUES (1, 'VERDURAS');
+ INSERT INTO CATEGORIA VALUES (1, 'GOLOCINAS');
+
