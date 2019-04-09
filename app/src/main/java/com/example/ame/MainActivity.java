@@ -8,6 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.database.sqlite.SQLiteDatabase;
+
 
 public class MainActivity extends AppCompatActivity {
     private EditText name;
